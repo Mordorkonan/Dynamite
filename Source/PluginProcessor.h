@@ -9,6 +9,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "FIFO.h"
+#include "CompressorCore.h"
 
 //==============================================================================
 /**
@@ -57,6 +59,8 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    Fifo<juce::AudioBuffer<float>, 256> fifo;
+    CompressorCore core{ 0.25f };
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DynamiteAudioProcessor)
 };
