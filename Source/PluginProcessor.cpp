@@ -134,18 +134,21 @@ void DynamiteAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    if (!core.getBypass())
+    {
+        // In case we have more outputs than inputs, this code clears any output
+        // channels that didn't contain input data, (because these aren't
+        // guaranteed to be empty - they may contain garbage).
+        // This is here to avoid people getting screaming feedback
+        // when they first compile a plugin, but obviously you don't need to keep
+        // this code if your algorithm always overwrites all the output channels.
+        for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+            buffer.clear(i, 0, buffer.getNumSamples());
 
-    auto audioBlock{ juce::dsp::AudioBlock<float>(buffer) };
-    auto processContext{ juce::dsp::ProcessContextReplacing<float>(audioBlock) };
-    core.process(processContext);
+        auto audioBlock{ juce::dsp::AudioBlock<float>(buffer) };
+        auto processContext{ juce::dsp::ProcessContextReplacing<float>(audioBlock) };
+        core.process(processContext);
+    }
 
     fifo.push(buffer);
 }

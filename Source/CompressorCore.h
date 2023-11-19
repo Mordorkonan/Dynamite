@@ -15,18 +15,28 @@ class CompressorCore
 {
 public:
     CompressorCore(const float& _ratio) noexcept;
+
     void applyAttack();
     void applyRelease();
+
     float getRatio() noexcept;
+    void calculateRatio();
+
     bool getBypass() const noexcept;
     void setBypass(bool state) noexcept;
+
+    float getThreshold() const noexcept;
+    void setThreshold(float th) noexcept;
 
     template <class ProcessContext>
     void process(const ProcessContext& buffer) noexcept;
     float processSample(float sample) noexcept;
 private:
+    float multiplier{ 1.0f };
     float ratio{ 0.25f };
+    float threshold{ 0.0f };
     bool bypass{ false };
+    bool signalOverThreshold{ false };
 };
 
 template <class ProcessContext>

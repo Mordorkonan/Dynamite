@@ -28,6 +28,16 @@ void CompressorCore::applyRelease() { }
 
 float CompressorCore::getRatio() noexcept { return 1; }
 
+void CompressorCore::calculateRatio()
+{
+    if (signalOverThreshold) { multiplier = ratio; }
+    else { multiplier = 1; }
+}
+
 bool CompressorCore::getBypass() const noexcept { return bypass; }
 
 void CompressorCore::setBypass(bool state) noexcept { bypass = state; }
+
+float CompressorCore::getThreshold() const noexcept { return threshold; }
+
+void CompressorCore::setThreshold(float th) noexcept { threshold = th; }
