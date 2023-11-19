@@ -14,13 +14,13 @@
 class CompressorCore
 {
 public:
-    CompressorCore(const float& _ratio) noexcept;
+    CompressorCore() noexcept;
 
     void applyAttack();
     void applyRelease();
 
-    float getRatio() noexcept;
-    void calculateRatio();
+    float getRatio() const noexcept;
+    void setRatio(float newRatio) noexcept;
 
     bool getBypass() const noexcept;
     void setBypass(bool state) noexcept;
@@ -31,10 +31,11 @@ public:
     template <class ProcessContext>
     void process(const ProcessContext& buffer) noexcept;
     float processSample(float sample) noexcept;
+    void calculateMultiplier();
 private:
     float multiplier{ 1.0f };
     float ratio{ 0.25f };
-    float threshold{ 0.0f };
+    float threshold{ 0.0f }; // dB
     bool bypass{ false };
     bool signalOverThreshold{ false };
 };
@@ -60,7 +61,7 @@ void CompressorCore::process(const ProcessContext& context) noexcept
     {
         auto* source = inBlock.getChannelPointer(0);
         auto* dest = outBlock.getChannelPointer(0);
-        for (size_t i = 0; i < length; ++i) { dest[i] = source[i] * ratio; }
+        for (size_t i = 0; i < length; ++i) { dest[i] = source[i] * multiplier; }
     }
     else
     {
@@ -71,7 +72,7 @@ void CompressorCore::process(const ProcessContext& context) noexcept
             juce::FloatVectorOperations::multiply(
                 outBlock.getChannelPointer(chan),
                 inBlock.getChannelPointer(chan),
-                ratio,
+                multiplier,
                 length);
         }
 

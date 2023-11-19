@@ -145,9 +145,20 @@ void DynamiteAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear(i, 0, buffer.getNumSamples());
 
-        auto audioBlock{ juce::dsp::AudioBlock<float>(buffer) };
-        auto processContext{ juce::dsp::ProcessContextReplacing<float>(audioBlock) };
-        core.process(processContext);
+        //auto audioBlock{ juce::dsp::AudioBlock<float>(buffer) };
+        //auto processContext{ juce::dsp::ProcessContextReplacing<float>(audioBlock) };
+        //core.process(processContext);
+        auto numSamples  = buffer.getNumSamples();
+        auto numChannels = buffer.getNumChannels();
+
+        for (size_t chn = 0; chn < numChannels; ++chn)
+        {
+            for (size_t smpl = 0; smpl < numSamples; ++smpl)
+            {
+                auto sample{ buffer.getSample(chn, smpl) };
+                buffer.setSample(chn, smpl, core.processSample(sample));
+            }
+        }
     }
 
     fifo.push(buffer);
@@ -177,6 +188,8 @@ void DynamiteAudioProcessor::setStateInformation (const void* data, int sizeInBy
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 }
+
+CompressorCore& DynamiteAudioProcessor::getCompressorCore() noexcept { return core; }
 
 //==============================================================================
 // This creates new instances of the plugin..

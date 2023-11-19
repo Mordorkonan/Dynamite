@@ -9,6 +9,10 @@
             file="Source/CompressorCore.cpp"/>
       <FILE id="QKkTS2" name="CompressorCore.h" compile="0" resource="0"
             file="Source/CompressorCore.h"/>
+      <FILE id="D5trKO" name="CoreController.cpp" compile="1" resource="0"
+            file="Source/CoreController.cpp"/>
+      <FILE id="tFjzuV" name="CoreController.h" compile="0" resource="0"
+            file="Source/CoreController.h"/>
       <FILE id="Jad228" name="FIFO.h" compile="0" resource="0" file="Source/FIFO.h"/>
       <FILE id="maqENF" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

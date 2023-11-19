@@ -11,7 +11,7 @@
 #include "CompressorCore.h"
 //============================================================
 
-CompressorCore::CompressorCore(const float& _ratio) noexcept : ratio(_ratio) { }
+CompressorCore::CompressorCore() noexcept { }
 
 float CompressorCore::processSample(float sample) noexcept
 //============================================================
@@ -19,20 +19,19 @@ float CompressorCore::processSample(float sample) noexcept
 // value. Threshold and ratio are calculated externally.
 //============================================================
 {
-    return sample * ratio;
+    auto sampleDb = juce::Decibels::gainToDecibels(std::abs(sample));
+    if (sampleDb > threshold) { multiplier = ratio; }
+    else { multiplier = 1.0f; }
+    return sample * multiplier;
 }
 
 void CompressorCore::applyAttack() { }
 
 void CompressorCore::applyRelease() { }
 
-float CompressorCore::getRatio() noexcept { return 1; }
+float CompressorCore::getRatio() const noexcept { return ratio; }
 
-void CompressorCore::calculateRatio()
-{
-    if (signalOverThreshold) { multiplier = ratio; }
-    else { multiplier = 1; }
-}
+void CompressorCore::setRatio(float newRatio) noexcept { ratio = newRatio; }
 
 bool CompressorCore::getBypass() const noexcept { return bypass; }
 
@@ -41,3 +40,9 @@ void CompressorCore::setBypass(bool state) noexcept { bypass = state; }
 float CompressorCore::getThreshold() const noexcept { return threshold; }
 
 void CompressorCore::setThreshold(float th) noexcept { threshold = th; }
+
+void CompressorCore::calculateMultiplier()
+{
+    if (signalOverThreshold) { multiplier = ratio; }
+    else { multiplier = 1; }
+}

@@ -58,9 +58,12 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    CompressorCore& getCompressorCore() noexcept;
+
 private:
     Fifo<juce::AudioBuffer<float>, 256> fifo;
-    CompressorCore core{ 0.25f };
+    CompressorCore core;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DynamiteAudioProcessor)
 };
