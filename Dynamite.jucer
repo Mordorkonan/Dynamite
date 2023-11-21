@@ -5,6 +5,15 @@
               pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST3">
   <MAINGROUP id="WMx7Na" name="Dynamite">
     <GROUP id="{5AF76E48-FFAF-A9CE-D855-F961A2D44A42}" name="Source">
+      <FILE id="MjhMUh" name="CompressorCore.cpp" compile="1" resource="0"
+            file="Source/CompressorCore.cpp"/>
+      <FILE id="QKkTS2" name="CompressorCore.h" compile="0" resource="0"
+            file="Source/CompressorCore.h"/>
+      <FILE id="D5trKO" name="CoreController.cpp" compile="1" resource="0"
+            file="Source/CoreController.cpp"/>
+      <FILE id="tFjzuV" name="CoreController.h" compile="0" resource="0"
+            file="Source/CoreController.h"/>
+      <FILE id="Jad228" name="FIFO.h" compile="0" resource="0" file="Source/FIFO.h"/>
       <FILE id="maqENF" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="xCoNr8" name="PluginProcessor.h" compile="0" resource="0"
@@ -19,9 +28,9 @@
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="Dynamite" enablePluginBinaryCopyStep="1"
-                       vst3BinaryLocation="%CommonProgram\W6432%\VST3_2"/>
+                       vst3BinaryLocation="%CommonProgramW6432%\VST3_2"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="Dynamite" enablePluginBinaryCopyStep="1"
-                       vst3BinaryLocation="%CommonProgram\W6432%\VST3_2"/>
+                       vst3BinaryLocation="%CommonProgramW6432%\VST3_2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../Program Files/JUCE/modules"/>
@@ -36,6 +45,7 @@
         <MODULEPATH id="juce_graphics" path="../../Program Files/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../Program Files/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../Program Files/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
   </EXPORTFORMATS>
@@ -49,6 +59,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
